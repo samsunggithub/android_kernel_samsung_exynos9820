@@ -8,6 +8,10 @@ jobs:
     runs-on: ubuntu-latest
 
     steps:
+      - name: Set Time Zone to Beijing
+        run: |
+          sudo timedatectl set-timezone "Asia/Shanghai"
+	    
       - name: Set up build environment
         run: |
           sudo apt-get update
