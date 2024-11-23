@@ -1,0 +1,39 @@
+name: Build and Release
+
+on:
+  workflow_dispatch:
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Set up build environment
+        run: |
+          sudo apt-get update
+          sudo apt-get install -y build-essential curl
+
+      - name: Checkout repository with submodules
+        uses: actions/checkout@v4
+        with:
+          submodules: true
+
+      - name: Setup KernelSU
+        run: |
+          if [ -d "./KernelSU" ]; then rm -rf "./KernelSU"; fi
+          if [ -d "./drivers/kernelsu" ]; then rm -rf "./drivers/kernelsu"; fi
+          curl -LSs "https://raw.githubusercontent.com/Star-Seven/KernelSU/main/kernel/setup.sh" | bash -s main
+
+      - name: Build for multiple devices
+        run: bash -c 'for device in d2x d2s d2xks d1 d1ks; do ./build.sh -m $device -k y; done'
+
+      - name: Prepare ZIP files for upload
+        run: |
+          mkdir -p ${{ github.workspace }}/build/out/zip_files
+          find ${{ github.workspace }}/build/out/ -type f -name "*.zip" -exec cp {} ${{ github.workspace }}/build/out/zip_files/ \;
+
+      - name: Upload ZIP files as artifact
+        uses: actions/upload-artifact@v4
+        with:
+         name: build-zips
+         path: ${{ github.workspace }}/build/out/zip_files/
