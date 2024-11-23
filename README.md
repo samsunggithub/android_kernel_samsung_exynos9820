@@ -4,10 +4,6 @@
 ## 2024.11.21
 - Restore support for non GKI kernels using the latest kernelsu source code.
 - Merge extreme kernelsu branch modification: import SusFS.
-- Add modifications from abhinavjha dev: Added OC and UC
-- Little cores:130MHz to 2.002 GHz 
-- Middle cores: unchanged 
-- Big Cores: OC to 2.912 GHz
 
 - TBD
 
