@@ -1,6 +1,13 @@
-# ExtremeKernel for Exynos 9820 devices
+# ExtremeKernel for Exynos 9820 and 9825 devices
 
 ## Features
+## 2024.11.21
+- Restore support for non GKI kernels using the latest kernelsu source code.
+- Merge extreme kernelsu branch modification: import SusFS.
+- Add modifications from abhinavjha dev: Added OC and UC
+- Little cores:130MHz to 2.002 GHz 
+- Middle cores: unchanged 
+- Big Cores: OC to 2.912 GHz
 
 - TBD
 
@@ -40,7 +47,7 @@ https://source.android.com/docs/setup/start/requirements
 
 2. Properly clone repository with submodules (KernelSU and toolchains)
 
-```git clone --recurse-submodules https://github.com/ExtremeXT/android_kernel_samsung_exynos9820.git```
+```git clone --recurse-submodules https://github.com/Star-Seven/android_kernel_samsung_exynos9820.git```
 
 3. Build for your device
 
