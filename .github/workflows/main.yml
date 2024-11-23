@@ -1,0 +1,52 @@
+name: Upload Build Artifact
+
+on:
+  # 根据需要触发工作流
+  workflow_dispatch:
+    inputs:
+      version:
+        description: 'Version of the build'
+        required: true
+        default: '1.0'
+      model:
+        description: 'Model name'
+        required: true
+        default: 'default_model'
+
+jobs:
+  upload-artifact:
+    runs-on: ubuntu-latest
+
+    env:
+      # 设置环境变量，这里使用了工作流的输入参数
+      VERSION: ${{ github.event.inputs.version }}
+      MODEL: ${{ github.event.inputs.model }}
+      # DATE 可以使用预定义的变量或者自定义的日期格式
+      DATE: $(date +%Y%m%d) # 或者使用其他日期格式
+
+    steps:
+      - name: Set up build environment
+        run: |
+          sudo apt-get update
+          sudo apt-get install -y build-essential curl   
+	   
+      - name: Checkout repository with submodules
+        uses: actions/checkout@v4
+        with:
+          submodules: true
+	  
+      - name: Setup KernelSU
+        run: |
+          if [ -d "./KernelSU" ]; then rm -rf "./KernelSU"; fi
+          if [ -d "./drivers/kernelsu" ]; then rm -rf "./drivers/kernelsu"; fi
+          curl -LSs "https://raw.githubusercontent.com/Star-Seven/KernelSU/main/kernel/setup.sh" | bash -s main
+          
+
+      # 假设您在这里有构建步骤，生成了需要上传的文件
+
+      - name: Upload Artifact
+        uses: actions/upload-artifact@v4
+        with:
+          name: build
+          # 使用表达式语法动态设置路径和文件名
+          path: ${{ github.workspace }}/build/out/${{ env.MODEL }}/${{ env.VERSION }}_${{ env.MODEL }}_UNOFFICIAL_KSU_${{ env.DATE }}.zip
