@@ -41,6 +41,9 @@ jobs:
           if [ -d "./drivers/kernelsu" ]; then rm -rf "./drivers/kernelsu"; fi
           curl -LSs "https://raw.githubusercontent.com/Star-Seven/KernelSU/main/kernel/setup.sh" | bash -s main
 
+      - name: Build for multiple devices
+        run: bash -c 'for device in d2x d2s d2xks d1 d1ks; do ./build.sh -m $device -k y; done'
+
       - name: Upload Artifact
         uses: actions/upload-artifact@v4
         with:
