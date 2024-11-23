@@ -30,20 +30,11 @@ jobs:
           sudo apt-get update
           sudo apt-get install -y build-essential curl   
 
-      - name: Checkout repository with submodules
-        uses: actions/checkout@v4
-        with:
-          submodules: true
-
       - name: Setup KernelSU
         run: |
           if [ -d "./KernelSU" ]; then rm -rf "./KernelSU"; fi
           if [ -d "./drivers/kernelsu" ]; then rm -rf "./drivers/kernelsu"; fi
           curl -LSs "https://raw.githubusercontent.com/Star-Seven/KernelSU/main/kernel/setup.sh" | bash -s main
-
-      # 假设您在这里有构建步骤，生成了需要上传的文件
-      - name: Build for multiple devices
-        run: bash -c 'for device in d1ks; do ./build.sh -m $device -k y; done'
 
       - name: Upload Artifact
         uses: actions/upload-artifact@v4
