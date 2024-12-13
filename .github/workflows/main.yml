@@ -26,7 +26,7 @@ jobs:
         run: |
           if [ -d "./KernelSU" ]; then rm -rf "./KernelSU"; fi
           if [ -d "./drivers/kernelsu" ]; then rm -rf "./drivers/kernelsu"; fi
-          curl -LSs "https://raw.githubusercontent.com/Star-Seven/KernelSU/Star/kernel/setup.sh" | bash -s main
+          curl -LSs "https://raw.githubusercontent.com/Star-Seven/KernelSU/Star/kernel/setup.sh" | bash -s
 
       - name: Build for multiple devices
         run: bash -c 'for device in d2xks; do ./build.sh -m $device -k y; done'
