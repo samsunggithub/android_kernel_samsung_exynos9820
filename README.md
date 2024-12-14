@@ -1,5 +1,11 @@
 # ExtremeKernel for Exynos 9820 and 9825 devices
 
+# 2024.12.12
+- Support SUSFS
+- Credits
+- susfs4ksu: https://gitlab.com/simonpunk/susfs4ksu/
+- ksu_module_susfs:https://github.com/sidex15/ksu_module_susfs
+
 ## Features
 ## 2024.11.21
 - Restore support for non GKI kernels using the latest kernelsu source code.
